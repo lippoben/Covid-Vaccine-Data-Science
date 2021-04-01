@@ -1,6 +1,13 @@
 import os
 import tweepy as tw
 import pandas as pd
+import numpy as np
+
+
+pd.set_option('display.width', 32000)
+np.set_printoptions(linewidth=32000)
+pd.set_option('display.max_columns', 1000)
+pd.set_option('display.max_rows', 1000)
 
 '''
 API Key = L3oCvIZuE3YXROTL3L4L8FCLb
@@ -20,6 +27,7 @@ auth.set_access_token(access_token, access_token_secret)
 api = tw.API(auth, wait_on_rate_limit=True)
 
 # Define the search term, the date_since date and the number of tweets as variables
+# Can prevent certain things coming up in tweets: https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators
 search_words = "#Vaccine -filter:retweets -filter:media -filter:native_video -filter:periscope -filter:vine"
 date_since = "2018-11-16"
 number_tweets = 5
@@ -29,9 +37,13 @@ tweets = tw.Cursor(api.search,
                        lang="en",
                        since=date_since).items(number_tweets)
 
-# Collect a list of tweets
-tweets = [tweet.text for tweet in tweets]
-print(tweets)
+
+tweet_data = [[tweet.user.screen_name, tweet.text, tweet.user.location] for tweet in tweets]
+
+tweet_dataframe = pd.DataFrame(data=tweet_data,
+                    columns=['username', 'text', "location"])
+
+print(tweet_dataframe)
 
 
 
