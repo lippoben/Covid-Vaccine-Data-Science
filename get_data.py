@@ -28,22 +28,23 @@ api = tw.API(auth, wait_on_rate_limit=True)
 
 # Define the search term, the date_since date and the number of tweets as variables
 # Can prevent certain things coming up in tweets: https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators
-search_words = "#Vaccine -filter:retweets -filter:media -filter:native_video -filter:periscope -filter:vine"
+search_words = "#Vaccine -filter:retweets -filter:media -filter:native_video -filter:periscope -filter:vine " \
+               "-filter:images -filter:twimg -filter:links -url:amazon"
 date_since = "2018-11-16"
-number_tweets = 5
+number_tweets = 20
+
 
 tweets = tw.Cursor(api.search,
-                       q=search_words,
-                       lang="en",
-                       since=date_since).items(number_tweets)
+                    q=search_words,
+                    lang="en",
+                    since=date_since).items(number_tweets)
 
+print(tweets.__class__)
 
-tweet_data = [[tweet.user.screen_name, tweet.text, tweet.user.location] for tweet in tweets]
+tweet_data = [[tweet.user.screen_name, tweet.text, tweet.user.location, tweet.retweet_count, tweet.favorite_count] for tweet in tweets]
 
 tweet_dataframe = pd.DataFrame(data=tweet_data,
-                    columns=['username', 'text', "location"])
+                    columns=['username', 'text', 'location', 'No of retweets', 'likes'])
 
 print(tweet_dataframe)
-
-
 
