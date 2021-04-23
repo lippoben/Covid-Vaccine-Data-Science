@@ -47,21 +47,32 @@ api = tw.API(auth, wait_on_rate_limit=True)
 # Can prevent certain things coming up in tweets: https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators
 search_words = "#Vaccine -filter:retweets -filter:media -filter:native_video -filter:periscope -filter:vine " \
                "-filter:images -filter:twimg -filter:links -url:amazon"
-date_since = "2018-11-16"
+date_since = "2020-03-01"
+date_until = "2020-04-01"
+date_from = "202003010000"
+date_to = "202004010000"
 number_tweets = 10
+filter = '#Vaccine -has:images -has:links -has:media -has:videos lang:en'
 
 
 tweets = tw.Cursor(api.search,
-                    q=search_words,
-                    geocode='54.600522,-4.153217,553km',
-                    lang="en",
-                    since=date_since).items(number_tweets)
+                   q=search_words,
+                   geocode=states['Ohio'],
+                   lang="en",
+                   since=date_since).items(number_tweets)
 
-tweet_data = [[tweet.user.screen_name, tweet.text, tweet.user.location, tweet.retweet_count, tweet.favorite_count,
-               tweet.place] for tweet in tweets]
+# tweets = tw.Cursor(api.search_full_archive,
+#                    environment_name='Uni',
+#                    query=filter,
+#                    fromDate=date_from,
+#                    toDate=date_to,
+#                    ).items(number_tweets)
+
+
+tweet_data = [[tweet.user.screen_name, tweet.text, tweet.retweet_count, tweet.favorite_count, tweet.created_at] for tweet in tweets]
 
 tweet_dataframe = pd.DataFrame(data=tweet_data,
-                    columns=['username', 'text', 'location', 'No of retweets', 'likes', 'co ords'])
+                    columns=['username', 'text', 'No of retweets', 'likes', 'time tweeted'])
 
 print(tweet_dataframe)
 
