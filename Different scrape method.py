@@ -52,14 +52,14 @@ states_coordinates = {'Alabama': '33.281585,-86.894870,186km', 'Alaska': '57.032
                       'California': '33.878785,-123.577868,671km', 'Colorado': '38.956353,-106.262055,224km',
                       'Connecticut': '41.475136,-72.826763,58km', 'Delaware': '39.649232,-75.588967,19km',
                       'Florida': '27.198446,-84.699117,494km', 'Georgia': '33.394949,-83.769366,191km',
-                      'Hawaii': '20.059015,-158.373655,581km', 'Idaho': '43.413682,-114.256366, 255km',
+                      'Hawaii': '20.059015,-158.373655,581km', 'Idaho': '43.413682,-114.256366,300km',
                       'Illinois': '41.099193,-89.097585,181km', 'Indiana': '40.539248,-86.265865,164km',
                       'Iowa': '42.167893,-93.564345,241km', 'Kansas': '38.385221,-96.837909,200km',
                       'Kentucky': '37.873594,-84.347940,134km', 'Louisiana': '30.054156,-91.751547,199km',
                       'Maine': '43.932264,-68.766803,184km', 'Maryland': '39.226707,-76.417279,62km',
                       'Massachusetts': '42.183335,-70.674852,77km', 'Michigan': '43.372248,-84.624588,188km',
                       'Minnesota': '45.182309,-94.422398,188km', 'Mississippi': '32.232354,-89.445932,231km',
-                      'Missouri': '38.519161,-92.478804,189km', 'Montana': '47.398283,-111.212020, 314km',
+                      'Missouri': '38.519161,-92.478804,189km', 'Montana': '47.398283,-111.212020,314km',
                       'Nebraska': '41.221794,-98.488939,218km', 'Nevada': '36.568177,-115.389179,121km',
                       'New Hampshire': '43.348584,-71.676609,83km', 'New Jersey': '40.625182,-74.483447,60km',
                       'New Mexico': '34.426068,-106.204642,283km', 'New York': '40.614464,-73.293319,64km',
@@ -82,19 +82,45 @@ dataset = []
 dataset_not_initiated = True
 
 
-for i in states_coordinates:
-    search_geo = add_geocode(general_search, i, states_coordinates)
-    for j in range(0, len(dates) - 1):
-        search_geo_date = add_dates(search_geo, dates[j], dates[j + 1])
-        temp_dataset = scrape_tweets(search_geo_date, max_tweets_per_month, i, dates[j], dates[j + 1])
-        print(len(temp_dataset))
-        print(temp_dataset.head())
-        if dataset_not_initiated:
-            dataset = temp_dataset
-            dataset_not_initiated = False
-        else:
-            dataset = join_datasets(temp_dataset, dataset)
-    print(len(dataset))
+# for i in states_coordinates:
+#     search_geo = add_geocode(general_search, i, states_coordinates)
+#     for j in range(0, len(dates) - 1):
+#         search_geo_date = add_dates(search_geo, dates[j], dates[j + 1])
+#         temp_dataset = scrape_tweets(search_geo_date, max_tweets_per_month, i, dates[j], dates[j + 1])
+#         print(len(temp_dataset))
+#         print(temp_dataset.head())
+#         if dataset_not_initiated:
+#             dataset = temp_dataset
+#             dataset_not_initiated = False
+#         else:
+#             dataset = join_datasets(temp_dataset, dataset)
+#     print(len(dataset))
+#     dataset.to_csv('VaccineData14.csv')
 
 
-dataset.to_csv('VaccineData.csv')
+# search_geo = add_geocode(general_search, 'Wyoming', states_coordinates)
+# for k in range(5, len(dates) - 1):
+#     search_geo_date = add_dates(search_geo, dates[k], dates[k + 1])
+#     temp_dataset = scrape_tweets(search_geo_date, max_tweets_per_month, 'Wyoming', dates[k], dates[k + 1])
+#     print(len(temp_dataset))
+#     print(temp_dataset.head())
+#     if dataset_not_initiated:
+#         dataset = temp_dataset
+#         dataset_not_initiated = False
+#     else:
+#         dataset = join_datasets(temp_dataset, dataset)
+#     dataset.to_csv('VaccineData15.csv')
+
+
+# search_geo = add_geocode(general_search, 'Wyoming', states_coordinates)
+# search_geo_date = add_dates(search_geo, dates[5], dates[6])
+# temp_dataset = scrape_tweets(search_geo_date, max_tweets_per_month, 'Wyoming', dates[1], dates[2])
+# print(len(temp_dataset))
+# print(temp_dataset.head())
+# if dataset_not_initiated:
+#     dataset = temp_dataset
+#     dataset_not_initiated = False
+# else:
+#     dataset = join_datasets(temp_dataset, dataset)
+
+# dataset.to_csv('VaccineData14.csv')
