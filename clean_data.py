@@ -136,4 +136,4 @@ tweetsDataframe['CleanedTweet'] = tweetsDataframe['Stopwords_Removed_Tweets']
 
 headers = ['date', 'content', 'CleanedTweet', 'replyCount', 'retweetCount', 'likeCount', 'state','start date', 'end date']
 #headers = ['Tweet', 'CleanedTweet','Sentiment']
-tweetsDataframe.to_csv('cleaned_vaccine_tweets.csv', columns = headers)
+tweetsDataframe.to_csv('Datasets/cleaned_vaccine_tweets.csv', columns = headers)
